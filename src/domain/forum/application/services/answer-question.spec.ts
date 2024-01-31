@@ -7,7 +7,9 @@ import { AnswersRepository } from '../repositories/answers-repository'
 let sut: AnswerQuestionService
 
 const fakeAnswersRepository: AnswersRepository = {
-  create: async (answer: Answer) => {},
+  create: async (answer: Answer) => {
+    return Promise.resolve()
+  },
 }
 
 describe('AnswerQuestionService', () => {
