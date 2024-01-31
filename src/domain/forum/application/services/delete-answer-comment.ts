@@ -1,3 +1,4 @@
+import { Either, left, right } from '@/core/either'
 import { AnswerCommentsRepository } from '@/domain/forum/application/repositories/answer-comments-repository'
 
 interface DeleteAnswerCommentServiceRequest {
@@ -5,8 +6,8 @@ interface DeleteAnswerCommentServiceRequest {
   answerCommentId: string
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface DeleteAnswerCommentServiceResponse {}
+// eslint-disable-next-line @typescript-eslint/ban-types
+type DeleteAnswerCommentServiceResponse = Either<string, {}>
 
 export class DeleteAnswerCommentService {
   constructor(private answerCommentsRepository: AnswerCommentsRepository) {}
@@ -19,15 +20,15 @@ export class DeleteAnswerCommentService {
       await this.answerCommentsRepository.findById(answerCommentId)
 
     if (!answerComment) {
-      throw new Error('Answer comment not found.')
+      return left('Answer comment not found.')
     }
 
     if (answerComment.authorId.toString() !== authorId) {
-      throw new Error('Not allowed')
+      return left('Not allowed')
     }
 
     await this.answerCommentsRepository.delete(answerComment)
 
-    return {}
+    return right({})
   }
 }
