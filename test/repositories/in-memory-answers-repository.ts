@@ -16,6 +16,14 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     return answer
   }
 
+  async save(answer: Answer) {
+    const itemIndex = this.registries.findIndex(
+      (registry) => registry.id === answer.id,
+    )
+
+    this.registries[itemIndex] = answer
+  }
+
   create(answer: Answer) {
     this.registries.push(answer)
 

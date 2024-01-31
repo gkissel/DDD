@@ -28,6 +28,14 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     return question
   }
 
+  async save(question: Question) {
+    const itemIndex = this.registries.findIndex(
+      (registry) => registry.id === question.id,
+    )
+
+    this.registries[itemIndex] = question
+  }
+
   async create(question: Question) {
     this.registries.push(question)
   }
