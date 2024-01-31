@@ -1,20 +1,16 @@
 import { beforeEach, expect, it } from 'vitest'
 import { AnswerQuestionService } from './answer-question'
 import { describe } from 'node:test'
-import { Answer } from '../../enterprise/entities/answer'
 import { AnswersRepository } from '../repositories/answers-repository'
+import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 
+let answersRepository: AnswersRepository
 let sut: AnswerQuestionService
-
-const fakeAnswersRepository: AnswersRepository = {
-  create: async (answer: Answer) => {
-    return Promise.resolve()
-  },
-}
 
 describe('AnswerQuestionService', () => {
   beforeEach(() => {
-    sut = new AnswerQuestionService(fakeAnswersRepository)
+    answersRepository = new InMemoryAnswersRepository()
+    sut = new AnswerQuestionService(answersRepository)
   })
 
   it('should be able to create an answer', async () => {

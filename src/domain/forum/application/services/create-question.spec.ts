@@ -1,19 +1,16 @@
 import { describe, it, expect } from 'vitest'
 import { CreateQuestionService } from './create-question'
 import { QuestionsRepository } from '../repositories/questions-repository'
-import { Question } from '../../enterprise/entities/question'
+import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 
 let sut: CreateQuestionService
-let fakeQuestionsRepository: QuestionsRepository
+let questionsRepository: QuestionsRepository
 
 describe('create Question Service', () => {
   beforeEach(() => {
-    fakeQuestionsRepository = {
-      create: async (question: Question) => {
-        return Promise.resolve()
-      },
-    }
-    sut = new CreateQuestionService(fakeQuestionsRepository)
+    questionsRepository = new InMemoryQuestionsRepository()
+
+    sut = new CreateQuestionService(questionsRepository)
   })
 
   it('should be able to create a question', async () => {
