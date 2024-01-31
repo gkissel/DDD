@@ -1,8 +1,8 @@
 import { beforeEach, expect, it } from 'vitest'
 import { AnswerQuestionService } from './answer-question'
 import { describe } from 'node:test'
-import { Answer } from '../entities/answer'
-import { AnswersRepository } from '../repositories/base/answers-repository'
+import { Answer } from '../../enterprise/entities/answer'
+import { AnswersRepository } from '../repositories/answers-repository'
 
 let sut: AnswerQuestionService
 
