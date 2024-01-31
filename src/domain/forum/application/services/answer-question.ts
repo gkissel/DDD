@@ -8,6 +8,10 @@ interface AnswerQuestionServiceRequest {
   content: string
 }
 
+interface AnswerQuestionServiceResponse {
+  answer: Answer
+}
+
 export class AnswerQuestionService {
   constructor(private answersRepository: AnswersRepository) {}
 
@@ -15,7 +19,7 @@ export class AnswerQuestionService {
     instructorId,
     questionId,
     content,
-  }: AnswerQuestionServiceRequest) {
+  }: AnswerQuestionServiceRequest): Promise<AnswerQuestionServiceResponse> {
     const answer = Answer.create({
       content,
       authorId: new UniqueEntityID(instructorId),
@@ -23,6 +27,6 @@ export class AnswerQuestionService {
     })
 
     await this.answersRepository.create(answer)
-    return answer
+    return { answer }
   }
 }

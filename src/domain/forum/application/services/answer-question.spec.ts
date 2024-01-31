@@ -20,6 +20,8 @@ describe('AnswerQuestionService', () => {
       content: 'Nova resposta',
     })
 
-    expect(answer.content).toEqual('Nova resposta')
+    expect(answer.answer).toBeDefined()
+    expect(answer.answer.authorId.toString()).toEqual('1')
+    expect(answer.answer.content).toEqual('Nova resposta')
   })
 })
