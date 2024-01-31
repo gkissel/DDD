@@ -1,4 +1,4 @@
-import { beforeEach, expect, it, test } from 'vitest'
+import { beforeEach, expect, it } from 'vitest'
 import { AnswerQuestionService } from './answer-question'
 import { describe } from 'node:test'
 
