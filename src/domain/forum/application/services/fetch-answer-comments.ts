@@ -1,14 +1,18 @@
 import { AnswerComment } from '@/domain/forum/enterprise/entities/answer-comment'
 import { AnswerCommentsRepository } from '@/domain/forum/application/repositories/answer-comments-repository'
+import { Either, right } from '@/core/either'
 
 interface FetchAnswerCommentsServiceRequest {
   answerId: string
   page: number
 }
 
-interface FetchAnswerCommentsServiceResponse {
-  answerComments: AnswerComment[]
-}
+type FetchAnswerCommentsServiceResponse = Either<
+  null,
+  {
+    answerComments: AnswerComment[]
+  }
+>
 
 export class FetchAnswerCommentsService {
   constructor(private answerCommentsRepository: AnswerCommentsRepository) {}
@@ -22,8 +26,8 @@ export class FetchAnswerCommentsService {
         page,
       })
 
-    return {
+    return right({
       answerComments,
-    }
+    })
   }
 }

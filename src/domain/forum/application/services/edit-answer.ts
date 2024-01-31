@@ -1,5 +1,8 @@
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 import { AnswersRepository } from '../repositories/answers-repository'
+import { Either, left, right } from '@/core/either'
+import { NotAllowedError } from './errors/not-allowed-error'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface EditAnswerServiceRequest {
   authorId: string
@@ -7,10 +10,12 @@ interface EditAnswerServiceRequest {
   content: string
 }
 
-interface EditAnswerServiceResponse {
-  answer: Answer
-}
-
+type EditAnswerServiceResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  {
+    answer: Answer
+  }
+>
 export class EditAnswerService {
   constructor(private answersRepository: AnswersRepository) {}
 
@@ -22,19 +27,19 @@ export class EditAnswerService {
     const answer = await this.answersRepository.findById(answerId)
 
     if (!answer) {
-      throw new Error('Answer not found.')
+      return left(new ResourceNotFoundError())
     }
 
     if (authorId !== answer.authorId.toString()) {
-      throw new Error('Not allowed.')
+      return left(new NotAllowedError())
     }
 
     answer.content = content
 
     await this.answersRepository.save(answer)
 
-    return {
+    return right({
       answer,
-    }
+    })
   }
 }
