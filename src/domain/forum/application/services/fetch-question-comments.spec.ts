@@ -36,7 +36,7 @@ describe('Fetch Question Comments', () => {
       page: 1,
     })
 
-    expect(value).toHaveLength(3)
+    expect(value?.questionComments).toHaveLength(3)
   })
 
   it('should be able to fetch paginated question comments', async () => {
@@ -53,6 +53,6 @@ describe('Fetch Question Comments', () => {
       page: 2,
     })
 
-    expect(value).toHaveLength(2)
+    expect(value?.questionComments).toHaveLength(2)
   })
 })
