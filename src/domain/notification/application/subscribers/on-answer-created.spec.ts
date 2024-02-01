@@ -8,12 +8,13 @@ import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-not
 import { makeQuestion } from 'test/factories/make-question'
 import { SpyInstance } from 'vitest'
 import { waitFor } from 'test/utils/wait-for'
+
+import { OnAnswerCreated } from './on-answer-created'
 import {
   SendNotificationService,
   SendNotificationServiceRequest,
   SendNotificationServiceResponse,
-} from '../../services/send-notification'
-import { OnAnswerCreated } from './on-answer-created'
+} from '../services/send-notification'
 
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
