@@ -1,27 +1,28 @@
 import { describe, it, expect } from 'vitest'
 import { CreateQuestionService } from './create-question'
-import { QuestionsRepository } from '../repositories/questions-repository'
+
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 
 let sut: CreateQuestionService
-let questionsRepository: QuestionsRepository
+let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 
 describe('create Question Service', () => {
   beforeEach(() => {
-    questionsRepository = new InMemoryQuestionsRepository()
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
 
-    sut = new CreateQuestionService(questionsRepository)
+    sut = new CreateQuestionService(inMemoryQuestionsRepository)
   })
 
   it('should be able to create a question', async () => {
-    const question = await sut.execute({
+    const result = await sut.execute({
       authorId: '1',
-      content: 'Nova pergunta',
       title: 'Nova pergunta',
+      content: 'Conteúdo da pergunta',
     })
 
-    expect(question.question).toBeDefined()
-    expect(question.question.authorId.toString()).toEqual('1')
-    expect(question.question.content).toEqual('Nova pergunta')
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryQuestionsRepository.registries[0]).toEqual(
+      result.value?.question,
+    )
   })
 })

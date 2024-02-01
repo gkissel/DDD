@@ -1,9 +1,9 @@
+import { Question } from '@/domain/forum/enterprise/entities/question'
 import { QuestionsRepository } from '../repositories/questions-repository'
-import { Question } from '../../enterprise/entities/question'
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
-interface CreateQuestionServiceRequest {
+interface GetQuestionBySlugServiceRequest {
   slug: string
 }
 
@@ -19,7 +19,7 @@ export class GetQuestionBySlugService {
 
   async execute({
     slug,
-  }: CreateQuestionServiceRequest): Promise<GetQuestionBySlugServiceResponse> {
+  }: GetQuestionBySlugServiceRequest): Promise<GetQuestionBySlugServiceResponse> {
     const question = await this.questionsRepository.findBySlug(slug)
 
     if (!question) {

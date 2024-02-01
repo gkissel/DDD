@@ -1,27 +1,25 @@
-import { beforeEach, expect, it } from 'vitest'
-import { AnswerQuestionService } from './answer-question'
-import { describe } from 'node:test'
-import { AnswersRepository } from '../repositories/answers-repository'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
+import { AnswerQuestionService } from './answer-question'
 
-let answersRepository: AnswersRepository
+let inMemoryAnswersRepository: InMemoryAnswersRepository
 let sut: AnswerQuestionService
 
-describe('AnswerQuestionService', () => {
+describe('Create Answer', () => {
   beforeEach(() => {
-    answersRepository = new InMemoryAnswersRepository()
-    sut = new AnswerQuestionService(answersRepository)
+    inMemoryAnswersRepository = new InMemoryAnswersRepository()
+    sut = new AnswerQuestionService(inMemoryAnswersRepository)
   })
 
-  it('should be able to create an answer', async () => {
-    const answer = await sut.execute({
+  it('should be able to create a answer', async () => {
+    const result = await sut.execute({
       questionId: '1',
       instructorId: '1',
-      content: 'Nova resposta',
+      content: 'Conteúdo da resposta',
     })
 
-    expect(answer.answer).toBeDefined()
-    expect(answer.answer.authorId.toString()).toEqual('1')
-    expect(answer.answer.content).toEqual('Nova resposta')
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryAnswersRepository.registries[0]).toEqual(
+      result.value?.answer,
+    )
   })
 })
