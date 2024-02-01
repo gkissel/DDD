@@ -10,6 +10,7 @@ let sut: EditQuestionService
 describe('Edit Question', () => {
   beforeEach(() => {
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
+
     sut = new EditQuestionService(inMemoryQuestionsRepository)
   })
 
@@ -28,6 +29,7 @@ describe('Edit Question', () => {
       authorId: 'author-1',
       title: 'Pergunta teste',
       content: 'Conteúdo teste',
+      attachmentsIds: [],
     })
 
     expect(inMemoryQuestionsRepository.registries[0]).toMatchObject({
@@ -51,6 +53,7 @@ describe('Edit Question', () => {
       authorId: 'author-2',
       title: 'Pergunta teste',
       content: 'Conteúdo teste',
+      attachmentsIds: [],
     })
 
     expect(result.isLeft()).toBe(true)
