@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/core/events/domain-events'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { AnswerAttachmentsRepository } from '@/domain/forum/application/repositories/answer-attachments-repository'
 import { AnswersRepository } from '@/domain/forum/application/repositories/answers-repository'
@@ -30,18 +31,20 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     return answers
   }
 
+  async create(answer: Answer) {
+    this.registries.push(answer)
+
+    DomainEvents.dispatchEventsForAggregate(answer.id)
+  }
+
   async save(answer: Answer) {
     const itemIndex = this.registries.findIndex(
       (registry) => registry.id === answer.id,
     )
 
     this.registries[itemIndex] = answer
-  }
 
-  create(answer: Answer) {
-    this.registries.push(answer)
-
-    return Promise.resolve()
+    DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
   async delete(answer: Answer) {
