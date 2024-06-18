@@ -1,10 +1,4 @@
----
-runme:
-  id: 01HNDR9DGMKVJMX65TPVZ04665
-  version: v2.2
----
-
-# DDD (Domain-drive Design)
+# DDD (Domain Driven Design)
 
 Design dirigido à domínio
 
